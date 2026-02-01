@@ -27,7 +27,7 @@
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap>../../Downloads/banner-772x250.jpg</pixmap>
+     <pixmap>banner-772x250.jpg</pixmap>
     </property>
    </widget>
    <widget class="QTabWidget" name="tabWidget">
@@ -35,7 +35,7 @@
      <rect>
       <x>-10</x>
       <y>300</y>
-      <width>1541</width>
+      <width>1561</width>
       <height>431</height>
      </rect>
     </property>
