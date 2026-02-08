@@ -27,6 +27,13 @@ class School(QMainWindow):
         self.login.clicked.connect(self.login1)
         self.menu11.triggered.connect(self.addnewstudentinterface)
         self.save.clicked.connect(self.addnewstudent)
+    def clear_form(self):
+        self.fn.clear()
+        self.nb.clear()
+        self.em.clear()
+        self.ad.clear()
+        self.dt.clear()
+        self.st.setCurrentIndex(0)
     def addnewstudent(self):
         db,cr=connection()
         if not db or not cr:
@@ -48,8 +55,9 @@ class School(QMainWindow):
         value=(registration,name,gender,date,address,phone_number,email,standard)
         cr.execute(qry,value)
         db.commit()
-        
+        QMessageBox.information(self,"School Management system","student added successfully")
         close_connection(db)
+        self.clear_form()
     def addnewstudentinterface(self):
         self.tabWidget.setCurrentIndex(2)
         self.registration_number_new_student()
