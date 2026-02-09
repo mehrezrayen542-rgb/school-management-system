@@ -43,7 +43,7 @@
      <string notr="true">background-color:rgb(170, 0, 255);</string>
     </property>
     <property name="currentIndex">
-     <number>2</number>
+     <number>3</number>
     </property>
     <widget class="QWidget" name="tab">
      <attribute name="title">
@@ -653,7 +653,7 @@ font: 75 21pt &quot;MS Shell Dlg 2&quot;;</string>
        <string>Full Name :</string>
       </property>
      </widget>
-     <widget class="QLineEdit" name="lineEdit_16">
+     <widget class="QLineEdit" name="fn1">
       <property name="geometry">
        <rect>
         <x>290</x>
@@ -683,7 +683,7 @@ border-radius:10px;</string>
        <string>Gender :</string>
       </property>
      </widget>
-     <widget class="QRadioButton" name="radioButton_5">
+     <widget class="QRadioButton" name="m1">
       <property name="geometry">
        <rect>
         <x>230</x>
@@ -699,7 +699,7 @@ border-radius:10px;</string>
        <string>Male</string>
       </property>
      </widget>
-     <widget class="QRadioButton" name="radioButton_6">
+     <widget class="QRadioButton" name="f1">
       <property name="geometry">
        <rect>
         <x>380</x>
@@ -731,7 +731,7 @@ border-radius:10px;</string>
        <string>Date of birth :</string>
       </property>
      </widget>
-     <widget class="QLineEdit" name="lineEdit_17">
+     <widget class="QLineEdit" name="dt1">
       <property name="geometry">
        <rect>
         <x>290</x>
@@ -745,7 +745,7 @@ border-radius:10px;</string>
 border-radius:10px;</string>
       </property>
      </widget>
-     <widget class="QComboBox" name="comboBox_3">
+     <widget class="QComboBox" name="rn1">
       <property name="geometry">
        <rect>
         <x>290</x>
@@ -777,7 +777,7 @@ border-radius:10px;
        <string>Adress :</string>
       </property>
      </widget>
-     <widget class="QTextEdit" name="textEdit_3">
+     <widget class="QTextEdit" name="ad1">
       <property name="geometry">
        <rect>
         <x>1030</x>
@@ -807,7 +807,7 @@ border-radius:10px;</string>
        <string>Phone Number :</string>
       </property>
      </widget>
-     <widget class="QLineEdit" name="lineEdit_18">
+     <widget class="QLineEdit" name="nb1">
       <property name="geometry">
        <rect>
         <x>1030</x>
@@ -837,7 +837,7 @@ border-radius:10px;</string>
        <string>Email :</string>
       </property>
      </widget>
-     <widget class="QLineEdit" name="lineEdit_19">
+     <widget class="QLineEdit" name="em1">
       <property name="geometry">
        <rect>
         <x>1030</x>
@@ -867,7 +867,7 @@ border-radius:10px;</string>
        <string>standard :</string>
       </property>
      </widget>
-     <widget class="QComboBox" name="comboBox_4">
+     <widget class="QComboBox" name="st1">
       <property name="geometry">
        <rect>
         <x>1030</x>
@@ -882,6 +882,11 @@ font: 75 12pt &quot;MS Shell Dlg 2&quot;;
 border-radius:10px;
 </string>
       </property>
+      <item>
+       <property name="text">
+        <string>select standard</string>
+       </property>
+      </item>
       <item>
        <property name="text">
         <string>1st standard</string>
@@ -938,7 +943,7 @@ border-radius:10px;
        </property>
       </item>
      </widget>
-     <widget class="QPushButton" name="pushButton_5">
+     <widget class="QPushButton" name="delete1">
       <property name="geometry">
        <rect>
         <x>1240</x>
@@ -959,10 +964,10 @@ font: 75 16pt &quot;MS Shell Dlg 2&quot;;</string>
        <string>Delete  student details</string>
       </property>
      </widget>
-     <widget class="QPushButton" name="pushButton_6">
+     <widget class="QPushButton" name="edit1">
       <property name="geometry">
        <rect>
-        <x>940</x>
+        <x>930</x>
         <y>430</y>
         <width>271</width>
         <height>71</height>
