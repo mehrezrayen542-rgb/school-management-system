@@ -43,7 +43,7 @@
      <string notr="true">background-color:rgb(170, 0, 255);</string>
     </property>
     <property name="currentIndex">
-     <number>3</number>
+     <number>5</number>
     </property>
     <widget class="QWidget" name="tab">
      <attribute name="title">
@@ -1335,7 +1335,7 @@ font: 75 21pt &quot;MS Shell Dlg 2&quot;;</string>
          <string>Registration Number :</string>
         </property>
        </widget>
-       <widget class="QComboBox" name="comboBox_6">
+       <widget class="QComboBox" name="rn2">
         <property name="geometry">
          <rect>
           <x>290</x>
@@ -1621,7 +1621,7 @@ font: 75 21pt &quot;MS Shell Dlg 2&quot;;</string>
         <string>Registration Number :</string>
        </property>
       </widget>
-      <widget class="QComboBox" name="comboBox_7">
+      <widget class="QComboBox" name="rn3">
        <property name="geometry">
         <rect>
          <x>290</x>
@@ -1955,7 +1955,7 @@ font: 75 21pt &quot;MS Shell Dlg 2&quot;;</string>
         <string>Registration Number :</string>
        </property>
       </widget>
-      <widget class="QComboBox" name="comboBox_9">
+      <widget class="QComboBox" name="rn4">
        <property name="geometry">
         <rect>
          <x>290</x>
@@ -2147,7 +2147,7 @@ font: 75 21pt &quot;MS Shell Dlg 2&quot;;</string>
         <string>Registration Number :</string>
        </property>
       </widget>
-      <widget class="QComboBox" name="comboBox_10">
+      <widget class="QComboBox" name="rn5">
        <property name="geometry">
         <rect>
          <x>290</x>

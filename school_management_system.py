@@ -27,14 +27,15 @@ class School(QMainWindow):
         self.menu11.triggered.connect(self.addnewstudentinterface)
         self.save.clicked.connect(self.addnewstudent)
         self.menu12.triggered.connect(self.modifystudentinterface)
+        self.menu21.triggered.connect(self.addmarksinterface)
         self.edit1.clicked.connect(self.editstudent)
         self.rn1.currentIndexChanged.connect(self.load_student_data)
         self.delete1.clicked.connect(self.delete)
+    #enlever un eleve
     def delete(self):
         db, cr = connection()
         if db and cr:
            registration=int(self.rn1.currentText())
-           
            try:
                qry="DELETE from student where registration_number=?"
                cr.execute(qry,(registration,))
@@ -52,8 +53,7 @@ class School(QMainWindow):
                QMessageBox.information(self,"School Management system","An error occurred. Please check the entered information and try again.")
         close_connection(db)
         self.load_registration_numbers()
-
-   
+   #affiche les élèves
     def load_student_data(self):
        registration = self.rn1.currentText()
        db, cr = connection()
@@ -75,18 +75,18 @@ class School(QMainWindow):
                if index > 0:
                    self.st1.setCurrentIndex(index)
        close_connection(db)
-
-    def load_registration_numbers(self):
+    #affiche tout les ids
+    def load_registration_numbers(self,combo):
        db, cr = connection()
        if db and cr:
            cr.execute("SELECT registration_number FROM student")
            results = cr.fetchall()
            #on continue ici
-           self.rn1.clear()  # vide le combo avant de remplir
+           combo.clear()  # vide le combo avant de remplir
            for r in results:
-              self.rn1.addItem(r[0])
+              combo.addItem(r[0])
        close_connection(db)
-
+    #vide tout les champs
     def clear_form(self):
         self.fn.clear()
         self.nb.clear()
@@ -94,6 +94,7 @@ class School(QMainWindow):
         self.ad.clear()
         self.dt.clear()
         self.st.setCurrentIndex(0)
+    #modifie les eleves
     def editstudent(self):
         db,cr=connection()
         if not db or not cr:
@@ -164,9 +165,13 @@ class School(QMainWindow):
     def addnewstudentinterface(self):
         self.tabWidget.setCurrentIndex(2)
         self.registration_number_new_student()
+    def addmarksinterface(self):
+        self.tabWidget.setCurrentIndex(4)
+        self.load_registration_numbers(self.rn2)
+        self.load_registration_numbers(self.rn3)
     def modifystudentinterface(self):
         self.tabWidget.setCurrentIndex(3)
-        self.load_registration_numbers()
+        self.load_registration_numbers(self.rn1)
     def login1(self):
         user=self.user.text()
         pwd=self.pwd.text()
