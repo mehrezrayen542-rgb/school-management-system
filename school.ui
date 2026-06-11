@@ -1809,7 +1809,7 @@ border-radius:10px;</string>
         <string>social :</string>
        </property>
       </widget>
-      <widget class="QPushButton" name="pushButton_9">
+      <widget class="QPushButton" name="deletemark">
        <property name="geometry">
         <rect>
          <x>290</x>
@@ -1830,7 +1830,7 @@ font: 75 16pt &quot;MS Shell Dlg 2&quot;;</string>
         <string>Delete mark details</string>
        </property>
       </widget>
-      <widget class="QPushButton" name="pushButton_10">
+      <widget class="QPushButton" name="editmark">
        <property name="geometry">
         <rect>
          <x>10</x>
@@ -1851,7 +1851,7 @@ font: 75 16pt &quot;MS Shell Dlg 2&quot;;</string>
         <string>Edit mark details</string>
        </property>
       </widget>
-      <widget class="QPushButton" name="pushButton_11">
+      <widget class="QPushButton" name="getmark">
        <property name="geometry">
         <rect>
          <x>580</x>
@@ -1872,7 +1872,7 @@ font: 75 16pt &quot;MS Shell Dlg 2&quot;;</string>
         <string>Get Marks</string>
        </property>
       </widget>
-      <widget class="QComboBox" name="rn3_2">
+      <widget class="QComboBox" name="tr2">
        <property name="geometry">
         <rect>
          <x>290</x>
@@ -1887,6 +1887,21 @@ font: 75 12pt &quot;MS Shell Dlg 2&quot;;
 border-radius:10px;
 </string>
        </property>
+       <item>
+        <property name="text">
+         <string>1</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>2</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>3</string>
+        </property>
+       </item>
       </widget>
      </widget>
     </widget>

@@ -39,6 +39,9 @@ class School(QMainWindow):
         # adding mark page
         self.menu21.triggered.connect(self.addmarksinterface)
         self.savemark.clicked.connect(self.savemark1)
+        self.getmark.clicked.connect(self.getmark1)
+        self.editmark.clicked.connect(self.editmark1)
+        self.deletemark.clicked.connect(self.deletemark1)
 
 
     def login1(self):
@@ -168,6 +171,7 @@ class School(QMainWindow):
                QMessageBox.information(self,"School Management system","An error occurred. Please check the entered information and try again.")
         close_connection(db)
         self.load_registration_numbers(self.rn1)
+    
     def editstudent(self):
         db,cr=connection()
         if not db or not cr:
@@ -211,10 +215,12 @@ class School(QMainWindow):
             QMessageBox.information(self,"School Management system","An error occurred. Please check the entered information and try again.")
         close_connection(db)
         self.clear_form()
+    
     def addmarksinterface(self):
         self.tabWidget.setCurrentIndex(4)
         self.load_registration_numbers(self.rn2)
         self.load_registration_numbers(self.rn3)
+    
     def savemark1(self):
         db,cr = connection()
         if not db or not cr:
@@ -238,13 +244,79 @@ class School(QMainWindow):
             db.commit()
             QMessageBox.information(self,"School Management system","marks added successfully")
             close_connection(db)
+        self.rn2.setCurrentIndex(0)
         self.tr1.clear()
         self.lang1.clear()
         self.eng1.clear()
         self.math1.clear()
         self.sc1.clear()
         self.soc1.clear()
- 
+    
+    def getmark1(self):
+        db,cr = connection()
+        if not db or not cr:
+            print("Error connecting to database")
+            return
+        registration = int(self.rn3.currentText())
+        trimestre = int(self.tr2.currentText())
+        cr.execute("select language,english,maths,science,social from mark where registration_number=? and trimestre=?",(registration,trimestre))
+        result=cr.fetchone()
+        if result:
+            self.lang2.setText(str(result[0]))
+            self.eng2.setText(str(result[1]))
+            self.math2.setText(str(result[2]))
+            self.sc2.setText(str(result[3]))
+            self.soc2.setText(str(result[4]))
+        else:
+            QMessageBox.information(self,"School Management system","this trimestre does not exist in this database , please try another trimestre or try another student")
+    
+    def editmark1(self):
+        db,cr=connection()
+        if not db or not cr:
+            print("Error connecting to database")
+            return
+        registration = int(self.rn3.currentText())
+        trimestre = int(self.tr2.currentText())
+        language = int(self.lang2.text())
+        english = int(self.eng2.text())
+        maths = int(self.math2.text())
+        science = int(self.sc2.text())
+        social = int(self.soc2.text())
+        qry = "update mark set language=?,english=?,maths=?,science=?,social=?  where registration_number=? and trimestre=?"
+        value = (language,english,maths,science,social,registration,trimestre)
+        try:
+            cr.execute(qry,value)
+            db.commit()
+            QMessageBox.information(self,"School Management system","marks modified successfully")
+        except:
+            QMessageBox.information(self,"School Management system","An error occurred. Please check the entered information and try again.")
+        close_connection(db)
+        self.clearmarks()
+    
+    def deletemark1(self):
+        db, cr = connection()
+        if db and cr:
+           registration=int(self.rn3.currentText())
+           trimestre=int(self.tr2.currentText())
+           try:
+               qry="DELETE from mark where registration_number=? and trimestre=?" 
+               cr.execute(qry,(registration,trimestre))
+               db.commit()
+               QMessageBox.information(self,"School Management system","marks deleted successfully")
+
+           except:
+               QMessageBox.information(self,"School Management system","An error occurred. Please check the entered information and try again.")
+        close_connection(db)
+        self.clearmarks()
+
+    def clearmarks(self):
+        self.lang2.clear()
+        self.eng2.clear()
+        self.math2.clear()
+        self.sc2.clear()
+        self.soc2.clear()
+        self.rn3.setCurrentIndex(0)
+        self.tr2.setCurrentIndex(0)
 def main():
     app = QApplication(sys.argv)
     window = School()
