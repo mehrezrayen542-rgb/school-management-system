@@ -36,6 +36,9 @@ class School(QMainWindow):
         self.rn1.currentIndexChanged.connect(self.load_student_data)
         self.edit1.clicked.connect(self.editstudent)
         self.delete1.clicked.connect(self.delete)
+        # adding mark page
+        self.menu21.triggered.connect(self.addmarksinterface)
+        self.savemark.clicked.connect(self.savemark1)
 
 
     def login1(self):
@@ -199,7 +202,7 @@ class School(QMainWindow):
             ch+="standard=? "
             value.append(self.st1.currentText())
         value.append(registration)
-        qry="update student set "+ch+" where registration_number=?"
+        qry="update student set "+ ch +" where registration_number=?"
         try:
             cr.execute(qry,value)
             db.commit()
@@ -208,6 +211,39 @@ class School(QMainWindow):
             QMessageBox.information(self,"School Management system","An error occurred. Please check the entered information and try again.")
         close_connection(db)
         self.clear_form()
+    def addmarksinterface(self):
+        self.tabWidget.setCurrentIndex(4)
+        self.load_registration_numbers(self.rn2)
+        self.load_registration_numbers(self.rn3)
+    def savemark1(self):
+        db,cr = connection()
+        if not db or not cr:
+            print("Error connecting to database")
+            return
+        registration = int(self.rn2.currentText())
+        trimestre = int(self.tr1.text())
+        language = int(self.lang1.text())
+        english = int(self.eng1.text())
+        maths = int(self.math1.text())
+        science = int(self.sc1.text())
+        social = int(self.soc1.text())
+        cr.execute("select * from mark where registration_number=? and trimestre=?",(registration,trimestre))
+        result=cr.fetchall()
+        if result:
+            QMessageBox.information(self,"School Management system","this trimestre is already written , please try another trimestre or try to modify it")
+        else:
+            qry = "insert into mark(registration_number,trimestre,language,english,maths,science,social) values(?,?,?,?,?,?,?)"
+            value = (registration,trimestre,language,english,maths,science,social)
+            cr.execute(qry,value)
+            db.commit()
+            QMessageBox.information(self,"School Management system","marks added successfully")
+            close_connection(db)
+        self.tr1.clear()
+        self.lang1.clear()
+        self.eng1.clear()
+        self.math1.clear()
+        self.sc1.clear()
+        self.soc1.clear()
  
 def main():
     app = QApplication(sys.argv)

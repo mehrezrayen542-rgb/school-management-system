@@ -24,12 +24,12 @@ CREATE TABLE fees (
 CREATE TABLE mark (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     registration_number TEXT NOT NULL,
-    exam_name TEXT NOT NULL,
+    trimestre INTEGER NOT NULL,
     language INTEGER NOT NULL,
     english INTEGER NOT NULL,
     maths INTEGER NOT NULL,
     science INTEGER NOT NULL,
-    socail INTEGER NOT NULL
+    social INTEGER NOT NULL
 );
 
 -- table student

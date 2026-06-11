@@ -43,7 +43,7 @@
      <string notr="true">background-color:rgb(170, 0, 255);</string>
     </property>
     <property name="currentIndex">
-     <number>5</number>
+     <number>4</number>
     </property>
     <widget class="QWidget" name="tab">
      <attribute name="title">
@@ -1364,10 +1364,10 @@ border-radius:10px;
          <string notr="true">font: 75 16pt &quot;MS Shell Dlg 2&quot;;</string>
         </property>
         <property name="text">
-         <string>Exam Name :</string>
+         <string>trimestre :</string>
         </property>
        </widget>
-       <widget class="QLineEdit" name="lineEdit_26">
+       <widget class="QLineEdit" name="tr1">
         <property name="geometry">
          <rect>
           <x>290</x>
@@ -1381,7 +1381,7 @@ border-radius:10px;
 border-radius:10px;</string>
         </property>
        </widget>
-       <widget class="QLineEdit" name="lineEdit_27">
+       <widget class="QLineEdit" name="lang1">
         <property name="geometry">
          <rect>
           <x>290</x>
@@ -1411,7 +1411,7 @@ border-radius:10px;</string>
          <string>Language :</string>
         </property>
        </widget>
-       <widget class="QLineEdit" name="lineEdit_28">
+       <widget class="QLineEdit" name="eng1">
         <property name="geometry">
          <rect>
           <x>290</x>
@@ -1444,7 +1444,7 @@ border-radius:10px;</string>
          <string>English :</string>
         </property>
        </widget>
-       <widget class="QLineEdit" name="lineEdit_29">
+       <widget class="QLineEdit" name="math1">
         <property name="geometry">
          <rect>
           <x>290</x>
@@ -1477,7 +1477,7 @@ border-radius:10px;</string>
          <string>Maths :</string>
         </property>
        </widget>
-       <widget class="QLineEdit" name="lineEdit_30">
+       <widget class="QLineEdit" name="sc1">
         <property name="geometry">
          <rect>
           <x>290</x>
@@ -1507,7 +1507,7 @@ border-radius:10px;</string>
          <string>science :</string>
         </property>
        </widget>
-       <widget class="QLineEdit" name="lineEdit_31">
+       <widget class="QLineEdit" name="soc1">
         <property name="geometry">
          <rect>
           <x>290</x>
@@ -1537,7 +1537,7 @@ border-radius:10px;</string>
          <string>social :</string>
         </property>
        </widget>
-       <widget class="QPushButton" name="pushButton_8">
+       <widget class="QPushButton" name="savemark">
         <property name="geometry">
          <rect>
           <x>290</x>
@@ -1650,10 +1650,10 @@ border-radius:10px;
         <string notr="true">font: 75 16pt &quot;MS Shell Dlg 2&quot;;</string>
        </property>
        <property name="text">
-        <string>Exam Name :</string>
+        <string>trimeste:</string>
        </property>
       </widget>
-      <widget class="QLineEdit" name="lineEdit_33">
+      <widget class="QLineEdit" name="lang2">
        <property name="geometry">
         <rect>
          <x>290</x>
@@ -1683,7 +1683,7 @@ border-radius:10px;</string>
         <string>Language :</string>
        </property>
       </widget>
-      <widget class="QLineEdit" name="lineEdit_34">
+      <widget class="QLineEdit" name="eng2">
        <property name="geometry">
         <rect>
          <x>290</x>
@@ -1716,7 +1716,7 @@ border-radius:10px;</string>
         <string>English :</string>
        </property>
       </widget>
-      <widget class="QLineEdit" name="lineEdit_35">
+      <widget class="QLineEdit" name="math2">
        <property name="geometry">
         <rect>
          <x>290</x>
@@ -1749,7 +1749,7 @@ border-radius:10px;</string>
         <string>Maths :</string>
        </property>
       </widget>
-      <widget class="QLineEdit" name="lineEdit_36">
+      <widget class="QLineEdit" name="sc2">
        <property name="geometry">
         <rect>
          <x>290</x>
@@ -1779,7 +1779,7 @@ border-radius:10px;</string>
         <string>science :</string>
        </property>
       </widget>
-      <widget class="QLineEdit" name="lineEdit_37">
+      <widget class="QLineEdit" name="soc2">
        <property name="geometry">
         <rect>
          <x>290</x>
@@ -1830,22 +1830,6 @@ font: 75 16pt &quot;MS Shell Dlg 2&quot;;</string>
         <string>Delete mark details</string>
        </property>
       </widget>
-      <widget class="QComboBox" name="comboBox_8">
-       <property name="geometry">
-        <rect>
-         <x>290</x>
-         <y>160</y>
-         <width>271</width>
-         <height>51</height>
-        </rect>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">background-color: rgb(255, 255, 255);
-font: 75 12pt &quot;MS Shell Dlg 2&quot;;
-border-radius:10px;
-</string>
-       </property>
-      </widget>
       <widget class="QPushButton" name="pushButton_10">
        <property name="geometry">
         <rect>
@@ -1886,6 +1870,22 @@ font: 75 16pt &quot;MS Shell Dlg 2&quot;;</string>
        </property>
        <property name="text">
         <string>Get Marks</string>
+       </property>
+      </widget>
+      <widget class="QComboBox" name="rn3_2">
+       <property name="geometry">
+        <rect>
+         <x>290</x>
+         <y>160</y>
+         <width>271</width>
+         <height>51</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(255, 255, 255);
+font: 75 12pt &quot;MS Shell Dlg 2&quot;;
+border-radius:10px;
+</string>
        </property>
       </widget>
      </widget>
