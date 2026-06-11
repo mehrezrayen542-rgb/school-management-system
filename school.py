@@ -42,6 +42,13 @@ class School(QMainWindow):
         self.getmark.clicked.connect(self.getmark1)
         self.editmark.clicked.connect(self.editmark1)
         self.deletemark.clicked.connect(self.deletemark1)
+        self.menu31.triggered.connect(self.addattendanceinterface)
+        self.saveattendance.clicked.connect(self.saveattendance1)
+        self.getattendance.clicked.connect(self.getattendance1)
+        self.rn5.currentIndexChanged.connect(self.load_date)
+        self.editattendance.clicked.connect(self.editattendance1)
+        self.deleteattendance.clicked.connect(self.deleteattendance1)
+
 
 
     def login1(self):
@@ -72,6 +79,7 @@ class School(QMainWindow):
         else :
             print("error")
         close_connection(db)
+        
     def addnewstudent(self):
         db,cr = connection()
         if not db or not cr:
@@ -317,6 +325,108 @@ class School(QMainWindow):
         self.soc2.clear()
         self.rn3.setCurrentIndex(0)
         self.tr2.setCurrentIndex(0)
+    def addattendanceinterface(self):
+        self.tabWidget.setCurrentIndex(5)
+        self.load_registration_numbers(self.rn4)
+        self.load_registration_numbers(self.rn5)
+    def saveattendance1(self):
+        db,cr = connection()
+        if not db or not cr:
+            print("Error connecting to database")
+            return
+        registration = int(self.rn4.currentText())
+        date = self.date1.text()
+        morning = self.morn1.text()
+        evening = self.even1.text()
+        cr.execute("select * from attendance where registration_number=? and attendance_date=?",(registration,date))
+        result=cr.fetchall()
+        if result:
+            QMessageBox.information(self,"School Management system","the attendance details for this day is already written , please try another trimestre or try to modify it")
+        else:
+            qry = "insert into attendance(registration_number,attendance_date,morning,evening) values(?,?,?,?)"
+            value = (registration,date,morning,evening)
+            cr.execute(qry,value)
+            db.commit()
+            QMessageBox.information(self,"School Management system","attendance details added successfully")
+            close_connection(db)
+        self.rn4.setCurrentIndex(0)
+        self.morn1.clear()
+        self.date1.clear()
+        self.even1.clear()
+
+    def getattendance1(self):
+        db,cr = connection()
+        if not db or not cr:
+            print("Error connecting to database")
+            return
+        registration = int(self.rn5.currentText())
+        date = self.date2.currentText()
+        cr.execute("select morning,evening from attendance where registration_number=? and attendance_date=?",(registration,date))
+        result=cr.fetchone()
+        if result:
+            self.morn2.setText(str(result[0]))
+            self.even2.setText(str(result[1]))
+        else:
+            QMessageBox.information(self,"School Management system","this date  does not exist in this database , please try another date or try another student")
+    def load_date(self):
+       registration = int(self.rn5.currentText())
+       db, cr = connection()
+       if db and cr:
+           cr.execute("SELECT attendance_date FROM attendance where registration_number=?",(registration,))
+           results = cr.fetchall()
+           #on continue ici
+           self.date2.clear()  # vide le combo avant de remplir
+           if results :
+              for r in results:
+                 self.date2.addItem(r[0])
+                 
+           else:
+              QMessageBox.information(self,"School Management system","An error occurred. There is no date in the database please add new ones")
+
+       close_connection(db)
+    def editattendance1(self):
+        db,cr=connection()
+        if not db or not cr:
+            print("Error connecting to database")
+            return
+        registration = int(self.rn5.currentText())
+        date = self.date2.currentText()
+        morning = self.morn2.text()
+        evening = self.even2.text()
+        qry = "update attendance set morning=?,evening=? where registration_number=? and attendance_date=?"
+        value = (morning,evening,registration,date)
+        try:
+            cr.execute(qry,value)
+            db.commit()
+            QMessageBox.information(self,"School Management system","attendance details modified successfully")
+        except:
+            QMessageBox.information(self,"School Management system","An error occurred. Please check the entered information and try again.")
+        close_connection(db)
+        self.rn5.setCurrentIndex(0)
+        self.morn2.clear()
+        self.date2.setCurrentIndex(0)
+        self.even2.clear()
+    def deleteattendance1(self):
+        db, cr = connection()
+        if db and cr:
+           registration=int(self.rn5.currentText())
+           date = self.date2.currentText()
+           try:
+               qry="DELETE from attendance where registration_number=? and attendance_date=?" 
+               cr.execute(qry,(registration,date))
+               print("ok")
+               db.commit()
+               QMessageBox.information(self,"School Management system","attendance details deleted successfully")
+
+           except:
+               QMessageBox.information(self,"School Management system","An error occurred. Please check the entered information and try again.")
+        close_connection(db)
+        self.rn5.setCurrentIndex(0)
+        self.morn2.clear()
+        self.date2.clear()
+        load_date(self)
+        self.even2.clear()
+
 def main():
     app = QApplication(sys.argv)
     window = School()

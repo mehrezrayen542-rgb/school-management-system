@@ -43,7 +43,7 @@
      <string notr="true">background-color:rgb(170, 0, 255);</string>
     </property>
     <property name="currentIndex">
-     <number>4</number>
+     <number>5</number>
     </property>
     <widget class="QWidget" name="tab">
      <attribute name="title">
@@ -2002,7 +2002,7 @@ border-radius:10px;
         <string>Date :</string>
        </property>
       </widget>
-      <widget class="QLineEdit" name="lineEdit_32">
+      <widget class="QLineEdit" name="date1">
        <property name="geometry">
         <rect>
          <x>290</x>
@@ -2016,7 +2016,7 @@ border-radius:10px;
 border-radius:10px;</string>
        </property>
       </widget>
-      <widget class="QLineEdit" name="lineEdit_38">
+      <widget class="QLineEdit" name="morn1">
        <property name="geometry">
         <rect>
          <x>290</x>
@@ -2046,7 +2046,7 @@ border-radius:10px;</string>
         <string>Morning :</string>
        </property>
       </widget>
-      <widget class="QLineEdit" name="lineEdit_39">
+      <widget class="QLineEdit" name="even1">
        <property name="geometry">
         <rect>
          <x>290</x>
@@ -2079,7 +2079,7 @@ border-radius:10px;</string>
         <string>Evening :</string>
        </property>
       </widget>
-      <widget class="QPushButton" name="pushButton_12">
+      <widget class="QPushButton" name="saveattendance">
        <property name="geometry">
         <rect>
          <x>290</x>
@@ -2143,7 +2143,7 @@ font: 75 16pt &quot;MS Shell Dlg 2&quot;;</string>
 font: 75 21pt &quot;MS Shell Dlg 2&quot;;</string>
        </property>
        <property name="text">
-        <string>Enter Attendance Details</string>
+        <string>Edit / Delete Attendance Details</string>
        </property>
       </widget>
       <widget class="QLabel" name="label_79">
@@ -2194,7 +2194,7 @@ border-radius:10px;
         <string>Date :</string>
        </property>
       </widget>
-      <widget class="QLineEdit" name="lineEdit_41">
+      <widget class="QLineEdit" name="morn2">
        <property name="geometry">
         <rect>
          <x>290</x>
@@ -2224,7 +2224,7 @@ border-radius:10px;</string>
         <string>Morning :</string>
        </property>
       </widget>
-      <widget class="QLineEdit" name="lineEdit_42">
+      <widget class="QLineEdit" name="even2">
        <property name="geometry">
         <rect>
          <x>290</x>
@@ -2257,7 +2257,7 @@ border-radius:10px;</string>
         <string>Evening :</string>
        </property>
       </widget>
-      <widget class="QComboBox" name="comboBox_11">
+      <widget class="QComboBox" name="date2">
        <property name="geometry">
         <rect>
          <x>290</x>
@@ -2273,7 +2273,7 @@ border-radius:10px;
 </string>
        </property>
       </widget>
-      <widget class="QPushButton" name="pushButton_14">
+      <widget class="QPushButton" name="getattendance">
        <property name="geometry">
         <rect>
          <x>570</x>
@@ -2294,7 +2294,7 @@ font: 75 16pt &quot;MS Shell Dlg 2&quot;;</string>
         <string>Get Details</string>
        </property>
       </widget>
-      <widget class="QPushButton" name="pushButton_15">
+      <widget class="QPushButton" name="deleteattendance">
        <property name="geometry">
         <rect>
          <x>300</x>
@@ -2315,7 +2315,7 @@ font: 75 16pt &quot;MS Shell Dlg 2&quot;;</string>
         <string>Delete Attendance Details</string>
        </property>
       </widget>
-      <widget class="QPushButton" name="pushButton_13">
+      <widget class="QPushButton" name="editattendance">
        <property name="geometry">
         <rect>
          <x>10</x>
