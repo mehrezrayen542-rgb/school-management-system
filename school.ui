@@ -43,7 +43,7 @@
      <string notr="true">background-color:rgb(170, 0, 255);</string>
     </property>
     <property name="currentIndex">
-     <number>5</number>
+     <number>6</number>
     </property>
     <widget class="QWidget" name="tab">
      <attribute name="title">
@@ -3154,7 +3154,7 @@ font: 75 21pt &quot;MS Shell Dlg 2&quot;;</string>
            <string>Registration Number :</string>
           </property>
          </widget>
-         <widget class="QLineEdit" name="lineEdit_54">
+         <widget class="QLineEdit" name="receipt1">
           <property name="geometry">
            <rect>
             <x>290</x>
@@ -3168,7 +3168,7 @@ font: 75 21pt &quot;MS Shell Dlg 2&quot;;</string>
 border-radius:10px;</string>
           </property>
          </widget>
-         <widget class="QLineEdit" name="lineEdit_55">
+         <widget class="QLineEdit" name="reason1">
           <property name="geometry">
            <rect>
             <x>290</x>
@@ -3198,7 +3198,7 @@ border-radius:10px;</string>
            <string>Fees Payment Reason :</string>
           </property>
          </widget>
-         <widget class="QLineEdit" name="lineEdit_56">
+         <widget class="QLineEdit" name="amount1">
           <property name="geometry">
            <rect>
             <x>290</x>
@@ -3231,7 +3231,7 @@ border-radius:10px;</string>
            <string>Amount  :</string>
           </property>
          </widget>
-         <widget class="QLineEdit" name="lineEdit_57">
+         <widget class="QLineEdit" name="payementdate1">
           <property name="geometry">
            <rect>
             <x>290</x>
@@ -3264,7 +3264,7 @@ border-radius:10px;</string>
            <string>Date :</string>
           </property>
          </widget>
-         <widget class="QPushButton" name="pushButton_21">
+         <widget class="QPushButton" name="savefees">
           <property name="geometry">
            <rect>
             <x>290</x>
@@ -3285,7 +3285,7 @@ font: 75 16pt &quot;MS Shell Dlg 2&quot;;</string>
            <string>Save Fees details</string>
           </property>
          </widget>
-         <widget class="QComboBox" name="comboBox_15">
+         <widget class="QComboBox" name="rn6">
           <property name="geometry">
            <rect>
             <x>290</x>
@@ -3366,7 +3366,7 @@ font: 75 21pt &quot;MS Shell Dlg 2&quot;;</string>
         <string>Receipt Number :</string>
        </property>
       </widget>
-      <widget class="QComboBox" name="comboBox_16">
+      <widget class="QComboBox" name="receipt2">
        <property name="geometry">
         <rect>
          <x>290</x>
@@ -3395,24 +3395,10 @@ border-radius:10px;
         <string notr="true">font: 75 16pt &quot;MS Shell Dlg 2&quot;;</string>
        </property>
        <property name="text">
-        <string>Registration Name :</string>
+        <string>Registration Number :</string>
        </property>
       </widget>
-      <widget class="QLineEdit" name="lineEdit_58">
-       <property name="geometry">
-        <rect>
-         <x>290</x>
-         <y>160</y>
-         <width>271</width>
-         <height>51</height>
-        </rect>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">background-color: rgb(255, 255, 255);
-border-radius:10px;</string>
-       </property>
-      </widget>
-      <widget class="QLineEdit" name="lineEdit_59">
+      <widget class="QLineEdit" name="reason2">
        <property name="geometry">
         <rect>
          <x>290</x>
@@ -3442,7 +3428,7 @@ border-radius:10px;</string>
         <string>Fees Payment Reason :</string>
        </property>
       </widget>
-      <widget class="QLineEdit" name="lineEdit_60">
+      <widget class="QLineEdit" name="amount2">
        <property name="geometry">
         <rect>
          <x>290</x>
@@ -3475,7 +3461,7 @@ border-radius:10px;</string>
         <string>Amount  :</string>
        </property>
       </widget>
-      <widget class="QLineEdit" name="lineEdit_61">
+      <widget class="QLineEdit" name="payementdate2">
        <property name="geometry">
         <rect>
          <x>290</x>
@@ -3508,7 +3494,7 @@ border-radius:10px;</string>
         <string>Date :</string>
        </property>
       </widget>
-      <widget class="QPushButton" name="pushButton_23">
+      <widget class="QPushButton" name="deletefees">
        <property name="geometry">
         <rect>
          <x>330</x>
@@ -3529,7 +3515,7 @@ font: 75 16pt &quot;MS Shell Dlg 2&quot;;</string>
         <string>Delete Fees details</string>
        </property>
       </widget>
-      <widget class="QPushButton" name="pushButton_24">
+      <widget class="QPushButton" name="editfees">
        <property name="geometry">
         <rect>
          <x>20</x>
@@ -3547,7 +3533,23 @@ border-color: rgb(0, 0, 0);
 font: 75 16pt &quot;MS Shell Dlg 2&quot;;</string>
        </property>
        <property name="text">
-        <string>Ediit Fees details</string>
+        <string>Edit Fees details</string>
+       </property>
+      </widget>
+      <widget class="QComboBox" name="rn7">
+       <property name="geometry">
+        <rect>
+         <x>290</x>
+         <y>160</y>
+         <width>271</width>
+         <height>51</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(255, 255, 255);
+font: 75 12pt &quot;MS Shell Dlg 2&quot;;
+border-radius:10px;
+</string>
        </property>
       </widget>
      </widget>

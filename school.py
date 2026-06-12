@@ -48,6 +48,8 @@ class School(QMainWindow):
         self.rn5.currentIndexChanged.connect(self.load_date)
         self.editattendance.clicked.connect(self.editattendance1)
         self.deleteattendance.clicked.connect(self.deleteattendance1)
+        self.menu41.triggered.connect(self.feesinterface)
+        self.savefees.clicked.connect(self.savefees1)
 
 
 
@@ -426,6 +428,46 @@ class School(QMainWindow):
         self.date2.clear()
         load_date(self)
         self.even2.clear()
+    def feesinterface(self):
+        self.tabWidget.setCurrentIndex(6)
+        self.load_registration_numbers(self.rn6)
+        self.load_registration_numbers(self.rn7)
+        self.receipt_number()
+    def receipt_number(self):
+        db,cr=connection()
+        if db and cr:
+            cr.execute("select * from fees")
+            result=cr.fetchall()
+            if result:
+                self.receipt1.setText(str(len(result)+1))
+            else:
+                self.receipt1.setText(str(1))
+            self.receipt1.setReadOnly(True)
+        else :
+            print("error")
+        close_connection(db)
+    def savefees1(self):
+        db,cr = connection()
+        if not db or not cr:
+            print("Error connecting to database")
+            return
+        receipt = int(self.receipt1.text())
+        registration = int(self.rn6.currentText())
+        reason = self.reason1.text()
+        amount = self.amount1.text()
+        date = self.payementdate1.text()
+        qry = "insert into fees(registration_number,receipt_number,reason,amount,fees_date) values(?,?,?,?,?)"
+        value = (registration,receipt,reason,amount,date)
+        cr.execute(qry,value)
+        db.commit()
+        QMessageBox.information(self,"School Management system","fees details added successfully")
+        close_connection(db)
+        self.rn6.setCurrentIndex(0)
+        self.receipt1.setText(str(receipt+1))
+        self.reason1.clear()
+        self.amount1.clear()
+        self.payementdate1.clear()
+
 
 def main():
     app = QApplication(sys.argv)
