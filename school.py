@@ -53,9 +53,9 @@ class School(QMainWindow):
         self.receipt2.currentIndexChanged.connect(self.changeregistration)
         self.getfees.clicked.connect(self.getfees1)
         self.deletefees.clicked.connect(self.deletefees1)
-        self.editfees.clicked.connect(self.editfees1)
-        self.menu51.triggered.connect(self.showstudents)
-        self.menu52.triggered.connect(self.showmarks)
+        self.editfees.clicked.connect(self.edit_fees1)
+        self.menu51.triggered.connect(self.show_students)
+        self.menu52.triggered.connect(self.show_marks)
         self.menu53.triggered.connect(self.show_attendance_details)
         self.menu54.triggered.connect(self.show_fees)
         self.menu61.triggered.connect(QApplication.quit)
@@ -68,9 +68,11 @@ class School(QMainWindow):
         pwd = self.pwd.text()
         
         if (user == "admin" and pwd == "admin"):
+            
             self.tabWidget.setCurrentIndex(1) # change the page
             self.menuBar().setVisible(True)
         else:
+            
             QMessageBox.critical(self,"School Management system","incorrect username or password")
     
     def addnewstudentinterface(self):
@@ -79,23 +81,29 @@ class School(QMainWindow):
     
     def registration_number_new_student(self):
         db,cr=connection()
+        
         if db and cr:
             cr.execute("select * from student")
             result=cr.fetchall()
+            
             if result:
                 self.rn.setText(str(len(result)+1))
+            
             else:
                 self.rn.setText(str(1))
             self.rn.setReadOnly(True)
         else :
             print("error")
+        
         close_connection(db)
         
     def addnewstudent(self):
         db,cr = connection()
+        
         if not db or not cr:
             print("Error connecting to database")
             return
+        
         registration = self.rn.text()
         name = self.fn.text()
         date = self.dt.text()
@@ -103,8 +111,10 @@ class School(QMainWindow):
         phone_number = self.nb.text()
         email = self.em.text()
         standard = self.st.currentText()
+        
         if self.m.isChecked():
             gender = "male"
+        
         elif self.f.isChecked():
             gender = "female"
         # (registration,name,gender,address,date,phone_number,standard,email)
@@ -113,7 +123,9 @@ class School(QMainWindow):
         cr.execute(qry,value)
         db.commit()
         QMessageBox.information(self,"School Management system","student added successfully")
+        
         close_connection(db)
+        
         self.clear_form()
         self.registration_number_new_student()
         
@@ -132,7 +144,9 @@ class School(QMainWindow):
         
     def load_registration_numbers(self,combo):
        db, cr = connection()
+       
        if db and cr:
+           
            cr.execute("SELECT registration_number FROM student")
            results = cr.fetchall()
            #on continue ici
@@ -148,91 +162,119 @@ class School(QMainWindow):
        close_connection(db)
     
     def load_student_data(self):
+       
        registration = self.rn1.currentText()
+       
        db, cr = connection()
+       
        if db and cr:
            cr.execute("SELECT full_name, gender, date_of_birth, address, phone, email, standard FROM student WHERE registration_number=?", (registration,))
            result = cr.fetchone()
+           
            if result:
                self.fn1.setText(result[0])
                gender = result[1]
+               
                if gender == "male":
                    self.m1.setChecked(True)
+               
                elif gender == "female":
                    self.f1.setChecked(True)
+               
                self.dt1.setText(result[2])
                self.ad1.setPlainText(result[3])
                self.nb1.setText(result[4])
                self.em1.setText(result[5])
                index = self.st1.findText(result[6])
+               
                if index > 0:
                    self.st1.setCurrentIndex(index)
+       
        close_connection(db)
        #enlever un eleve
     def delete(self):
         db, cr = connection()
+        
         if db and cr:
            registration=int(self.rn1.currentText())
+           
            try:
                qry="DELETE from student where registration_number=?"
                cr.execute(qry,(registration,))
                db.commit()
+               
                try:
                    qry="UPDATE student SET registration_number = registration_number-1 WHERE registration_number > ?"
                    cr.execute(qry, (registration,))
                    db.commit()
                    QMessageBox.information(self,"School Management system","student deleted successfully")
+               
                except:
-                   print("erreur ici 1")
                    QMessageBox.information(self,"School Management system","An error occurred. Please check the entered information and try again.")
+           
            except:
-               print("erreur ici 2")
                QMessageBox.information(self,"School Management system","An error occurred. Please check the entered information and try again.")
+        
         close_connection(db)
+        
         self.load_registration_numbers(self.rn1)
     
     def editstudent(self):
         db,cr=connection()
+        
         if not db or not cr:
             print("Error connecting to database")
             return
+        
         ch=""
         value=[]
         registration=self.rn1.currentText()
         #(registration_number,full_name,gender,date_of_birth,address,phone,email,standard)
         if self.fn1.text():
+            
             ch+="full_name=?, "
             value.append(self.fn1.text())
         if self.m1.isChecked() or self.f1.isChecked():
+                
                 ch+="gender=?, "
                 if self.m1.isChecked():
                     value.append("male")
                 elif self.f1.isChecked():
                     value.append("female")
         if self.dt1.text():
+            
             ch+="date_of_birth=?, "
             value.append(self.dt1.text())
         if self.ad1.toPlainText():
+            
             ch+="address=?, "
             value.append(self.ad1.toPlainText())
         if self.nb1.text():
+            
             ch+="phone=?, "
             value.append(self.nb1.text())
         if self.em1.text():
+            
             ch+="email=?, "
             value.append(self.em1.text())
         if self.st1.currentText()!="select standard":
+            
             ch+="standard=? "
             value.append(self.st1.currentText())
         value.append(registration)
+        
         qry="update student set "+ ch +" where registration_number=?"
+        
         try:
             cr.execute(qry,value)
             db.commit()
             QMessageBox.information(self,"School Management system","student modified successfully")
+        
         except:
             QMessageBox.information(self,"School Management system","An error occurred. Please check the entered information and try again.")
+        
         close_connection(db)
+        
         self.clear_form()
     
     def addmarksinterface(self):
@@ -245,6 +287,7 @@ class School(QMainWindow):
         if not db or not cr:
             print("Error connecting to database")
             return
+        
         registration = int(self.rn2.currentText())
         trimestre = int(self.tr1.text())
         language = int(self.lang1.text())
@@ -254,15 +297,19 @@ class School(QMainWindow):
         social = int(self.soc1.text())
         cr.execute("select * from mark where registration_number=? and trimestre=?",(registration,trimestre))
         result=cr.fetchall()
+        
         if result:
             QMessageBox.information(self,"School Management system","this trimestre is already written , please try another trimestre or try to modify it")
+        
         else:
+            
             qry = "insert into mark(registration_number,trimestre,language,english,maths,science,social) values(?,?,?,?,?,?,?)"
             value = (registration,trimestre,language,english,maths,science,social)
             cr.execute(qry,value)
             db.commit()
             QMessageBox.information(self,"School Management system","marks added successfully")
             close_connection(db)
+            
         self.rn2.setCurrentIndex(0)
         self.tr1.clear()
         self.lang1.clear()
@@ -273,13 +320,17 @@ class School(QMainWindow):
     
     def getmark1(self):
         db,cr = connection()
+        
         if not db or not cr:
             print("Error connecting to database")
             return
+        
         registration = int(self.rn3.currentText())
         trimestre = int(self.tr2.currentText())
+        
         cr.execute("select language,english,maths,science,social from mark where registration_number=? and trimestre=?",(registration,trimestre))
         result=cr.fetchone()
+        
         if result:
             self.lang2.setText(str(result[0]))
             self.eng2.setText(str(result[1]))
@@ -291,9 +342,11 @@ class School(QMainWindow):
     
     def editmark1(self):
         db,cr=connection()
+        
         if not db or not cr:
             print("Error connecting to database")
             return
+        
         registration = int(self.rn3.currentText())
         trimestre = int(self.tr2.currentText())
         language = int(self.lang2.text())
@@ -301,22 +354,29 @@ class School(QMainWindow):
         maths = int(self.math2.text())
         science = int(self.sc2.text())
         social = int(self.soc2.text())
+        
         qry = "update mark set language=?,english=?,maths=?,science=?,social=?  where registration_number=? and trimestre=?"
         value = (language,english,maths,science,social,registration,trimestre)
+        
         try:
             cr.execute(qry,value)
             db.commit()
             QMessageBox.information(self,"School Management system","marks modified successfully")
         except:
             QMessageBox.information(self,"School Management system","An error occurred. Please check the entered information and try again.")
+        
         close_connection(db)
+        
         self.clearmarks()
     
     def deletemark1(self):
         db, cr = connection()
+        
         if db and cr:
+           
            registration=int(self.rn3.currentText())
            trimestre=int(self.tr2.currentText())
+           
            try:
                qry="DELETE from mark where registration_number=? and trimestre=?" 
                cr.execute(qry,(registration,trimestre))
@@ -325,7 +385,9 @@ class School(QMainWindow):
 
            except:
                QMessageBox.information(self,"School Management system","An error occurred. Please check the entered information and try again.")
+        
         close_connection(db)
+        
         self.clearmarks()
 
     def clearmarks(self):
@@ -336,24 +398,34 @@ class School(QMainWindow):
         self.soc2.clear()
         self.rn3.setCurrentIndex(0)
         self.tr2.setCurrentIndex(0)
+        
     def addattendanceinterface(self):
         self.tabWidget.setCurrentIndex(5)
         self.load_registration_numbers(self.rn4)
         self.load_registration_numbers(self.rn5)
+        
     def saveattendance1(self):
+        
         db,cr = connection()
+        
         if not db or not cr:
             print("Error connecting to database")
             return
+        
         registration = int(self.rn4.currentText())
         date = self.date1.text()
         morning = self.morn1.text()
         evening = self.even1.text()
+        
         cr.execute("select * from attendance where registration_number=? and attendance_date=?",(registration,date))
         result=cr.fetchall()
+        
         if result:
+            
             QMessageBox.information(self,"School Management system","the attendance details for this day is already written , please try another trimestre or try to modify it")
+        
         else:
+            
             qry = "insert into attendance(registration_number,attendance_date,morning,evening) values(?,?,?,?)"
             value = (registration,date,morning,evening)
             cr.execute(qry,value)
@@ -367,208 +439,273 @@ class School(QMainWindow):
 
     def getattendance1(self):
         db,cr = connection()
+        
         if not db or not cr:
             print("Error connecting to database")
             return
+        
         registration = int(self.rn5.currentText())
         date = self.date2.currentText()
+        
         cr.execute("select morning,evening from attendance where registration_number=? and attendance_date=?",(registration,date))
         result=cr.fetchone()
+        
         if result:
+            
             self.morn2.setText(str(result[0]))
             self.even2.setText(str(result[1]))
-        else:
+        
+        else:    
             QMessageBox.information(self,"School Management system","this date  does not exist in this database , please try another date or try another student")
+    
     def load_date(self):
        registration = int(self.rn5.currentText())
        db, cr = connection()
+       
        if db and cr:
            cr.execute("SELECT attendance_date FROM attendance where registration_number=?",(registration,))
            results = cr.fetchall()
            #on continue ici
            self.date2.clear()  # vide le combo avant de remplir
+           
            if results :
               for r in results:
                  self.date2.addItem(r[0])
                  
            else:
+              
               QMessageBox.information(self,"School Management system","An error occurred. There is no date in the database please add new ones")
 
        close_connection(db)
     def editattendance1(self):
         db,cr=connection()
+        
         if not db or not cr:
             print("Error connecting to database")
             return
+        
         registration = int(self.rn5.currentText())
         date = self.date2.currentText()
         morning = self.morn2.text()
         evening = self.even2.text()
+        
         qry = "update attendance set morning=?,evening=? where registration_number=? and attendance_date=?"
         value = (morning,evening,registration,date)
+        
         try:
             cr.execute(qry,value)
             db.commit()
             QMessageBox.information(self,"School Management system","attendance details modified successfully")
+        
         except:
+            
             QMessageBox.information(self,"School Management system","An error occurred. Please check the entered information and try again.")
+        
         close_connection(db)
+        
         self.rn5.setCurrentIndex(0)
         self.morn2.clear()
         self.date2.setCurrentIndex(0)
         self.even2.clear()
+        
     def deleteattendance1(self):
         db, cr = connection()
+        
         if db and cr:
+           
            registration=int(self.rn5.currentText())
            date = self.date2.currentText()
+           
            try:
                qry="DELETE from attendance where registration_number=? and attendance_date=?" 
                cr.execute(qry,(registration,date))
-               print("ok")
                db.commit()
                QMessageBox.information(self,"School Management system","attendance details deleted successfully")
 
            except:
                QMessageBox.information(self,"School Management system","An error occurred. Please check the entered information and try again.")
+        
         close_connection(db)
         self.rn5.setCurrentIndex(0)
         self.morn2.clear()
         self.date2.clear()
         load_date(self)
         self.even2.clear()
+        
     def feesinterface(self):
         self.tabWidget.setCurrentIndex(6)
         self.load_registration_numbers(self.rn6)
         self.receipt_number()
         self.load_receipt()
         self.rn7.setDisabled(True)
+        
     def receipt_number(self):
         db,cr=connection()
+        
         if db and cr:
             cr.execute("select * from fees")
             result=cr.fetchall()
+            
             if result:
                 self.receipt1.setText(str(len(result)+1))
+            
             else:
                 self.receipt1.setText(str(1))
+            
             self.receipt1.setReadOnly(True)
         else :
             print("error")
+            
         close_connection(db)
+        
     def savefees1(self):
         db,cr = connection()
+        
         if not db or not cr:
             print("Error connecting to database")
             return
+        
         receipt = int(self.receipt1.text())
         registration = int(self.rn6.currentText())
         reason = self.reason1.text()
         amount = self.amount1.text()
         date = self.payementdate1.text()
+        
         qry = "insert into fees(registration_number,receipt_number,reason,amount,fees_date) values(?,?,?,?,?)"
         value = (registration,receipt,reason,amount,date)
         cr.execute(qry,value)
         db.commit()
         QMessageBox.information(self,"School Management system","fees details added successfully")
+        
         close_connection(db)
+        
         self.rn6.setCurrentIndex(0)
         self.receipt1.setText(str(receipt+1))
         self.reason1.clear()
         self.amount1.clear()
         self.payementdate1.clear()
         self.load_receipt()
+        
     def load_receipt(self):
         db, cr = connection()
+        
         if db and cr:
             cr.execute("SELECT receipt_number FROM fees ")
             results = cr.fetchall()
             #on continue ici
             self.receipt2.clear()  # vide le combo avant de remplir
+            
             if results :
+               
                for r in results:
                   self.receipt2.addItem(r[0])
                  
             else:
                QMessageBox.information(self,"School Management system","An error occurred. There is no fees in the database please add new ones")
             
-
         close_connection(db)
+        
     def changeregistration(self):
         db, cr = connection()
+        
         receipt = self.receipt2.currentText()
+        
         if db and cr:
+            
             if not receipt:
                self.rn7.clear()
                close_connection(db)
                return
+            
             receipt = int(receipt)
+            
             cr.execute("SELECT registration_number from fees where receipt_number=? ",(receipt,))
             results = cr.fetchone()
+            
             if results :
                self.rn7.setText(results[0])
                  
             else:
+               
                QMessageBox.information(self,"School Management system","An error occurred. There is no registration number for this receipt in the database please add new ones")
 
         close_connection(db)
+        
     def getfees1(self):
         db,cr = connection()
+        
         if not db or not cr:
             print("Error connecting to database")
             return
+        
         registration = int(self.rn7.text())
         receipt = int(self.receipt2.currentText())
+        
         cr.execute("select reason,amount,fees_date from fees where registration_number=? and receipt_number=?",(registration,receipt))
         result=cr.fetchone()
+        
         if result:
             self.reason2.setText(str(result[0]))
             self.amount2.setText(str(result[1]))
             self.payementdate2.setText(str(result[2]))
+            
         else:
             QMessageBox.information(self,"School Management system","this receipt number  does not exist in this database , please try another date or try another student")
+            
     def deletefees1(self):
         db, cr = connection()
+        
         if db and cr:
            receipt = int(self.receipt2.currentText())
+           
            try:
+               
                qry="DELETE from fees where receipt_number=?"
                cr.execute(qry,(receipt,))
                db.commit()
                QMessageBox.information(self,"School Management system","fees details deleted successfully")
+               
            except:
                QMessageBox.information(self,"School Management system","An error occurred. Please check the entered information and try again.")
         close_connection(db)
+        
         self.reason2.clear()
         self.amount2.clear()
         self.payementdate2.clear()
         self.rn7.clear()
         self.load_receipt()
         self.changeregistration()
+        
     def editfees1(self):
         db,cr=connection()
+        
         if not db or not cr:
             print("Error connecting to database")
             return
+        
         receipt = int(self.receipt2.currentText())
         reason = self.reason2.text()
         amount = self.amount2.text()
         date = self.payementdate2.text()
         qry = "update fees set reason=?,amount=?,fees_date=? where receipt_number=?"
         value = (reason,amount,date,receipt)
+        
         try:
             cr.execute(qry,value)
             db.commit()
             QMessageBox.information(self,"School Management system","fees details modified successfully")
         except:
             QMessageBox.information(self,"School Management system","An error occurred. Please check the entered information and try again.")
+        
         close_connection(db)
+        
         self.reason2.clear()
         self.amount2.clear()
         self.payementdate2.clear()
         self.rn7.clear()
         self.load_receipt()
         self.changeregistration()
+    
     def load_students(self):
         db, cr = connection()
         cr.execute(""" SELECT registration_number,full_name,gender,date_of_birth,address,phone,email,standard FROM student""")
@@ -582,7 +719,7 @@ class School(QMainWindow):
 
         close_connection(db)
         
-    def showstudents(self):
+    def show_students(self):
         self.tabWidget.setCurrentIndex(7)
         self.load_students()
         
@@ -593,13 +730,14 @@ class School(QMainWindow):
         self.tableWidget2.setRowCount(len(result))
         for row, marks in enumerate(result):
             for col, value in enumerate(marks):
-                self.tableWidget2.setItem(row,col,QTableWidgetItem("          "+str(value)+"  "))
+                self.tableWidget2.setItem(row , col , QTableWidgetItem("          "+str(value)+"  "))
 
         close_connection(db)
         
-    def showmarks(self):
+    def show_marks(self):
         self.tabWidget.setCurrentIndex(8)
         self.load_marks()
+        
     def load_attendance_details(self):
         db, cr = connection()
         cr.execute(""" SELECT registration_number,attendance_date,morning,evening FROM attendance""")
@@ -624,9 +762,11 @@ class School(QMainWindow):
     def show_attendance_details(self):
         self.tabWidget.setCurrentIndex(9)
         self.load_attendance_details()
+        
     def show_fees(self):
         self.tabWidget.setCurrentIndex(10)
         self.load_fees()
+
 def main():
     app = QApplication(sys.argv)
     window = School()
