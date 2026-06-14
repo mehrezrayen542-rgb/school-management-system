@@ -50,6 +50,10 @@ class School(QMainWindow):
         self.deleteattendance.clicked.connect(self.deleteattendance1)
         self.menu41.triggered.connect(self.feesinterface)
         self.savefees.clicked.connect(self.savefees1)
+        self.receipt2.currentIndexChanged.connect(self.changeregistration)
+        self.getfees.clicked.connect(self.getfees1)
+        self.deletefees.clicked.connect(self.deletefees1)
+        self.editfees.clicked.connect(self.editfees1)
 
 
 
@@ -431,8 +435,9 @@ class School(QMainWindow):
     def feesinterface(self):
         self.tabWidget.setCurrentIndex(6)
         self.load_registration_numbers(self.rn6)
-        self.load_registration_numbers(self.rn7)
         self.receipt_number()
+        self.load_receipt()
+        self.rn7.setDisabled(True)
     def receipt_number(self):
         db,cr=connection()
         if db and cr:
@@ -467,7 +472,98 @@ class School(QMainWindow):
         self.reason1.clear()
         self.amount1.clear()
         self.payementdate1.clear()
+        self.load_receipt()
+    def load_receipt(self):
+        db, cr = connection()
+        if db and cr:
+            cr.execute("SELECT receipt_number FROM fees ")
+            results = cr.fetchall()
+            #on continue ici
+            self.receipt2.clear()  # vide le combo avant de remplir
+            if results :
+               for r in results:
+                  self.receipt2.addItem(r[0])
+                 
+            else:
+               QMessageBox.information(self,"School Management system","An error occurred. There is no fees in the database please add new ones")
+            
 
+        close_connection(db)
+    def changeregistration(self):
+        db, cr = connection()
+        receipt = self.receipt2.currentText()
+        if db and cr:
+            if not receipt:
+               self.rn7.clear()
+               close_connection(db)
+               return
+            receipt = int(receipt)
+            cr.execute("SELECT registration_number from fees where receipt_number=? ",(receipt,))
+            results = cr.fetchone()
+            if results :
+               self.rn7.setText(results[0])
+                 
+            else:
+               QMessageBox.information(self,"School Management system","An error occurred. There is no registration number for this receipt in the database please add new ones")
+
+        close_connection(db)
+    def getfees1(self):
+        db,cr = connection()
+        if not db or not cr:
+            print("Error connecting to database")
+            return
+        registration = int(self.rn7.text())
+        receipt = int(self.receipt2.currentText())
+        cr.execute("select reason,amount,fees_date from fees where registration_number=? and receipt_number=?",(registration,receipt))
+        result=cr.fetchone()
+        if result:
+            self.reason2.setText(str(result[0]))
+            self.amount2.setText(str(result[1]))
+            self.payementdate2.setText(str(result[2]))
+        else:
+            QMessageBox.information(self,"School Management system","this receipt number  does not exist in this database , please try another date or try another student")
+    def deletefees1(self):
+        db, cr = connection()
+        if db and cr:
+           receipt = int(self.receipt2.currentText())
+           try:
+               qry="DELETE from fees where receipt_number=?"
+               cr.execute(qry,(receipt,))
+               db.commit()
+               QMessageBox.information(self,"School Management system","fees details deleted successfully")
+           except:
+               QMessageBox.information(self,"School Management system","An error occurred. Please check the entered information and try again.")
+        close_connection(db)
+        self.reason2.clear()
+        self.amount2.clear()
+        self.payementdate2.clear()
+        self.rn7.clear()
+        self.load_receipt()
+        self.changeregistration()
+    def editfees1(self):
+        db,cr=connection()
+        if not db or not cr:
+            print("Error connecting to database")
+            return
+        receipt = int(self.receipt2.currentText())
+        reason = self.reason2.text()
+        amount = self.amount2.text()
+        date = self.payementdate2.text()
+        qry = "update fees set reason=?,amount=?,fees_date=? where receipt_number=?"
+        value = (reason,amount,date,receipt)
+        try:
+            cr.execute(qry,value)
+            db.commit()
+            QMessageBox.information(self,"School Management system","fees details modified successfully")
+        except:
+            QMessageBox.information(self,"School Management system","An error occurred. Please check the entered information and try again.")
+        close_connection(db)
+        self.reason2.clear()
+        self.amount2.clear()
+        self.payementdate2.clear()
+        self.rn7.clear()
+        self.load_receipt()
+        self.changeregistration()
 
 def main():
     app = QApplication(sys.argv)

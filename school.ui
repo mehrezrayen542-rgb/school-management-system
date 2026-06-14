@@ -3536,7 +3536,7 @@ font: 75 16pt &quot;MS Shell Dlg 2&quot;;</string>
         <string>Edit Fees details</string>
        </property>
       </widget>
-      <widget class="QComboBox" name="rn7">
+      <widget class="QLineEdit" name="rn7">
        <property name="geometry">
         <rect>
          <x>290</x>
@@ -3547,9 +3547,28 @@ font: 75 16pt &quot;MS Shell Dlg 2&quot;;</string>
        </property>
        <property name="styleSheet">
         <string notr="true">background-color: rgb(255, 255, 255);
-font: 75 12pt &quot;MS Shell Dlg 2&quot;;
-border-radius:10px;
-</string>
+border-radius:10px;</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="getfees">
+       <property name="geometry">
+        <rect>
+         <x>570</x>
+         <y>210</y>
+         <width>181</width>
+         <height>71</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">border-radius:10px;
+background-color: rgb(255, 85, 127);
+border-color: rgb(0, 0, 0);
+border-width:2px;
+border-color: rgb(0, 0, 0);
+font: 75 16pt &quot;MS Shell Dlg 2&quot;;</string>
+       </property>
+       <property name="text">
+        <string>Get Details</string>
        </property>
       </widget>
      </widget>
