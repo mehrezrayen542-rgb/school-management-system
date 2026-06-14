@@ -1,5 +1,5 @@
 import sys
-from PyQt5.QtWidgets import QMessageBox,QApplication, QMainWindow
+from PyQt5.QtWidgets import QMessageBox,QApplication, QMainWindow , QTableWidgetItem
 from PyQt5.uic import loadUi
 import sqlite3
 #sql
@@ -25,8 +25,8 @@ class School(QMainWindow):
         loadUi("school.ui", self)        
         # login page
         self.tabWidget.setCurrentIndex(0)
-        #self.tabWidget.tabBar().setVisible(False)
-        #☺self.menuBar().setVisible(False)
+        self.tabWidget.tabBar().setVisible(False)
+        self.menuBar().setVisible(False)
         self.login.clicked.connect(self.login1)
         # add new student page
         self.menu11.triggered.connect(self.addnewstudentinterface)
@@ -54,6 +54,11 @@ class School(QMainWindow):
         self.getfees.clicked.connect(self.getfees1)
         self.deletefees.clicked.connect(self.deletefees1)
         self.editfees.clicked.connect(self.editfees1)
+        self.menu51.triggered.connect(self.showstudents)
+        self.menu52.triggered.connect(self.showmarks)
+        self.menu53.triggered.connect(self.show_attendance_details)
+        self.menu54.triggered.connect(self.show_fees)
+        self.menu61.triggered.connect(QApplication.quit)
 
 
 
@@ -564,7 +569,64 @@ class School(QMainWindow):
         self.rn7.clear()
         self.load_receipt()
         self.changeregistration()
+    def load_students(self):
+        db, cr = connection()
+        cr.execute(""" SELECT registration_number,full_name,gender,date_of_birth,address,phone,email,standard FROM student""")
+        students = cr.fetchall()
 
+        self.tableWidget.setRowCount(len(students))
+
+        for row, student in enumerate(students):
+            for col, value in enumerate(student):
+                self.tableWidget.setItem(row,col,QTableWidgetItem(str(value)))
+
+        close_connection(db)
+        
+    def showstudents(self):
+        self.tabWidget.setCurrentIndex(7)
+        self.load_students()
+        
+    def load_marks(self):
+        db, cr = connection()
+        cr.execute(""" SELECT registration_number,trimestre,(language+english+maths+science+social)/5,language,english,maths,science,social FROM mark""")
+        result = cr.fetchall()
+        self.tableWidget2.setRowCount(len(result))
+        for row, marks in enumerate(result):
+            for col, value in enumerate(marks):
+                self.tableWidget2.setItem(row,col,QTableWidgetItem("          "+str(value)+"  "))
+
+        close_connection(db)
+        
+    def showmarks(self):
+        self.tabWidget.setCurrentIndex(8)
+        self.load_marks()
+    def load_attendance_details(self):
+        db, cr = connection()
+        cr.execute(""" SELECT registration_number,attendance_date,morning,evening FROM attendance""")
+        result = cr.fetchall()
+        self.tableWidget3.setRowCount(len(result))
+        for row, attendance in enumerate(result):
+            for col, value in enumerate(attendance):
+                self.tableWidget3.setItem(row,col,QTableWidgetItem("          "+str(value)+"  "))
+
+        close_connection(db)
+    def load_fees(self):
+        db, cr = connection()
+        cr.execute(""" SELECT registration_number,receipt_number,reason,amount,fees_date FROM fees""")
+        result = cr.fetchall()
+        self.tableWidget4.setRowCount(len(result))
+        for row, fees in enumerate(result):
+            for col, value in enumerate(fees):
+                self.tableWidget4.setItem(row,col,QTableWidgetItem("          "+str(value)+"  "))
+
+        close_connection(db)
+        
+    def show_attendance_details(self):
+        self.tabWidget.setCurrentIndex(9)
+        self.load_attendance_details()
+    def show_fees(self):
+        self.tabWidget.setCurrentIndex(10)
+        self.load_fees()
 def main():
     app = QApplication(sys.argv)
     window = School()
