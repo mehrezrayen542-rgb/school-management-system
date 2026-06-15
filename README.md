@@ -1,7 +1,7 @@
 # school-management-system
 
 ### 🔐 Login Page
-![Login Page]([images/login.png](https://github.com/mehrezrayen542-rgb/school-management-system/blob/main/login.png))
+![Login Page](https://github.com/mehrezrayen542-rgb/school-management-system/blob/main/login.png)
 
 ### 👨‍🎓 Student Management
 ![Student Page](images/student.png)
