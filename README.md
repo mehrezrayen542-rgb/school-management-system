@@ -56,12 +56,6 @@ The project uses 4 main tables:
 
 ---
 
-## 🧱 Installation & Setup
-
-### 1. Clone the repository
-```bash
-git clone https://github.com/your-username/school-management-system.git
-cd school-management-system
 ### 🔐 Login Page
 ![Login Page](https://github.com/mehrezrayen542-rgb/school-management-system/blob/main/login.png)
 ![welcome Page](https://github.com/mehrezrayen542-rgb/school-management-system/blob/main/welcome.png)
